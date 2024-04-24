@@ -1,0 +1,9 @@
+GET http://localhost:8080
+###
+GET http://localhost:8080/testlisting
+###
+GET http://localhost:8080/listings
+###
+GET http://localhost:8080/listings/new
+###
+GET http://localhost:8080/listings/6627b28acc3b07a927e20674
