@@ -5,11 +5,21 @@
     <form method="GET" action="/listings/new">
         <button>Create a New Listing</button>
     </form>
-    <ul>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">        
         <% for(let listing of allListings){ %>
-            <li><a href="/listings/<%=listing._id%>">
-                <%=listing.title%>
-            </a></li>
+            <div class="col">
+                <div class="card mb-2 h-100" style="width: 18rem;">
+                    <img src="<%=listing.image%>" class="card-img-top" alt="..." style="height: 18rem;">
+                    <div class="card-body">
+                    <h5 class="card-title"><%=listing.title.slice(0,25)%></h5>
+                    <p class="card-text">$<%=listing.price.toLocaleString("en-IN")%>...</p>
+                    <a href="/listings/<%=listing._id%>" class="btn btn-primary">View Listing</a>
+                    </div>
+                </div>
+            </div>
         <% } %>
-    </ul>
+    </div>
+
 </body>
+

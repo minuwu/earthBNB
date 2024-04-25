@@ -6,8 +6,44 @@ body{
 }
 .navbar{
     height: 3rem;
+    background-color: aliceblue;
+}
+#navbarNavAltMarkup{
+    background-color: aliceblue;
 }
 .fa-earth-americas{
     color: rgb(132, 13, 13);
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: .2rem .1rem;
+}
+
+footer{
+    margin: 0 auto;
+    /* height: 4rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: blanchedalmond;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+f-socials, f-brand, f-links{
+    width: 100%;
+}
+/* .f-socials */
+.f-socials i{
+    font-size: 1.5rem;
+    color: black;
+    margin: .5rem .2rem
+}
+/* .f-brand */
+/* .f-links */
+.f-links a{
+    text-decoration: none;
+}
+.f-links a:hover{
+    text-decoration: underline;
 }
