@@ -1,0 +1,13 @@
+h1{
+    background-color: aquamarine;
+}
+body{
+    background-color: beige;
+}
+.navbar{
+    height: 3rem;
+}
+.fa-earth-americas{
+    color: rgb(132, 13, 13);
+    font-size: 3rem;
+}
