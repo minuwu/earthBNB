@@ -64,18 +64,22 @@ app.get("/listings/:id", async (req,res)=>{
     res.render("listings/show.ejs", {listing});
 })
 //create route: 
-app.post("/listings",async (req,res)=>{
-    let {title, description, image, price, location, country} = req.body;
-    let newListing = new Listing({
-        title,
-        description,
-        image,
-        price,
-        location,
-        country
-    });
-    let result = await newListing.save();
-    res.redirect("/listings");
+app.post("/listings",async (req,res, next)=>{
+    try{
+        let {title, description, image, price, location, country} = req.body;
+        let newListing = new Listing({
+            title,
+            description,
+            image,
+            price,
+            location,
+            country
+        });
+        let result = await newListing.save();
+        res.redirect("/listings");
+    }catch(err){
+        next(err);
+    }
 })
 //edit route:
 app.get("/listings/:id/edit",async (req,res)=>{
@@ -96,6 +100,12 @@ app.delete("/listings/:id", async (req,res)=>{
     console.log(deletedListing);
     res.redirect("/listings");
 })
+
+//error handling middleware
+app.use((err, req, res, next)=>{
+    res.send("Error Occurred ",err.name);
+})
+
 app.listen(PORT,(req,res)=>{
     console.log("Express: App listening on port: ",PORT);
 })
