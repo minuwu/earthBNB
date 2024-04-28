@@ -1,20 +1,25 @@
 <% layout("layouts/boilerplate") %>
 
-<body>
-    <h2>Check out all listing here</h2>
-    <form method="GET" action="/listings/new">
-        <button>Create a New Listing</button>
-    </form>
+<% 
+block("head")
+.append('<title>All Listings -WanderLust</title>')
+%>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">        
+<body>
+    <!-- <h2>Check out all listing here</h2> -->
+    <!-- <form method="GET" action="/listings/new">
+        <button>Create a New Listing</button>
+    </form> -->
+    <br><br>
+    <div class="row row-cols-md-3 row-cols-1 mb-4">        
         <% for(let listing of allListings){ %>
-            <div class="col">
-                <div class="card mb-2 h-100" style="width: 18rem;">
-                    <img src="<%=listing.image%>" class="card-img-top" alt="..." style="height: 18rem;">
+            <div class="col mb-2">
+                <div class="card ">
+                    <img src="<%=listing.image%>" class="card-img-top" alt="listing_img" style="height: 18rem;">
                     <div class="card-body">
-                    <h5 class="card-title"><%=listing.title.slice(0,25)%></h5>
+                    <h5 class="card-title"><%=listing.title%></h5>
                     <p class="card-text">$<%=listing.price.toLocaleString("en-IN")%>...</p>
-                    <a href="/listings/<%=listing._id%>" class="btn btn-primary">View Listing</a>
+                    <a href="/listings/<%=listing._id%>" class="btn btn-primary w-100">View Listing</a>
                     </div>
                 </div>
             </div>

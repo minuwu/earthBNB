@@ -1,24 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Listing</title>
-</head>
+<% layout("layouts/boilerplate.ejs")%>
+<% block("head").append(`<title>Create Listing -WanderLust</title>`)%>
+
 <body>
-    <h2>WanderLust</h2>
-    <h4>Create a new listing</h4>
-    <form method="POST" action="/listings">
-        <input name="title" type="text" placeholder="title">    <br><br>
-        <textarea name="description">
 
-        </textarea> <br><br>
-        <input name="image" type="text" placeholder="image">    <br><br>
-        <input name="price" type="text" placeholder="price">    <br><br>
-        <input name="location" type="text" placeholder="location">  <br><br>
-        <input name="country" type="text" placeholder="country">    <br><br>
-        <button>Submit the new listing</button>
-    </form>
+    <br><br>
+    
+    <div class="row">
+           
+            <form method="POST" action="/listings">
+            <div class="col-md-8 offset-md-2 mb-5">
+                <h2>Create a new listing</h2>
+                <div class="mb-3"><label for="title" class= "form-label"  >Listing Name</label>
+                    <input name="title" type="text" class= "form-control" id="title">
+                </div>
+                <div class="mb-3"><label for="description" class= "form-label"  >Details of the listing</label>
+                    <textarea name="description" class= "form-control" id="description">   </textarea>
+                </div>
+                <div class="mb-3"><label for="image" class= "form-label"  >Image Link</label>
+                    <input name="image" type="text" class= "form-control" id="image">  
+                </div>
+                <div class="mb-3"><label for="price" class= "form-label"  >Price</label>
+                    <input name="price" class= "form-control" type="text" id="price">  
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-3"><label for="location" class= "form-label"  >Location</label>
+                        <input name="location" class= "form-control" type="text" id="location"> 
+                    </div>
+                    <div class="col-md-4 mb-3"><label for="country" class= "form-label"  >Country</label>
+                        <input name="country" class= "form-control" type="text" id="country">    
+                    </div>
+                </div>
+               
+                <br>
+                <div class="mb-3">
+                    <button class="form-control btn btn-dark w-100 ">Submit the new listing</button>
+                </div>
+                <br><br><br><br><br>
+            </div>
+            </form>
+    </div>
+       
 </body>
-</html>
-
