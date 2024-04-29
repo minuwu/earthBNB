@@ -8,6 +8,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/expressError.js");
 
 app.set("view engine","ejs");
 // app.set("views",path.join(__dirname,"views"));
@@ -24,7 +25,7 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-app.get("/testlisting",async (req,res)=>{
+app.get("/testlisting",wrapAsync(async (req,res)=>{
     console.log("GET: /testlisting REQUESTED ");
     let listing = new Listing({
         title: "Sweet Home",
@@ -38,7 +39,7 @@ app.get("/testlisting",async (req,res)=>{
     let data = await (Listing.find());
     console.log(data);
     console.log("GET: /testlisting RESPONDED ");
-})
+}))
 
 app.get("/",(req,res)=>{
     console.log("GET: / REQUESTED ");
@@ -78,29 +79,34 @@ app.post("/listings",wrapAsync(async (req,res, next)=>{
         res.redirect("/listings");
 }));
 //edit route:
-app.get("/listings/:id/edit",async (req,res)=>{
+app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
     let {id}  = req.params;
     let listing = await Listing.findById(id);
     res.render("listings/edit.ejs", {listing});
-})
+}))
 //update route:
-app.put("/listings/:id", async (req,res)=>{
+app.put("/listings/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
     res.redirect(`/listings/${id}`);
-})
+}))
 //delete route:
-app.delete("/listings/:id", async (req,res)=>{
+app.delete("/listings/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     res.redirect("/listings");
+}))
+
+app.all("*", (req,res,next)=>{
+    next(ExpressError(404,"Page Not Found"))
 })
 
 //error handling middleware
 app.use((err, req, res, next)=>{
-    let msg = `Error Occured: ${err}`;
-    res.send(msg);
+    let { statusCode= 500, message= "Something went wrong" } = err;
+    console.log(`Handler: ErrCode ${statusCode} | ErrMsg ${message}`);
+    res.status(statusCode).send(message);
 })
 
 app.listen(PORT,(req,res)=>{
