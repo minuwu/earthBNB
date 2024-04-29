@@ -7,28 +7,41 @@
     
     <div class="row">
            
-            <form method="POST" action="/listings">
+            <form method="POST" action="/listings" class="needs-validation" novalidate>
             <div class="col-md-8 offset-md-2 mb-5">
                 <h2>Create a new listing</h2>
-                <div class="mb-3"><label for="title" class= "form-label"  >Listing Name</label>
-                    <input name="title" type="text" class= "form-control" id="title">
-                </div>
-                <div class="mb-3"><label for="description" class= "form-label"  >Details of the listing</label>
+                <div class="mb-3">
+                    <label for="title" class= "form-label"  >Listing Name</label>
+                    <input required  name="title" type="text" class= "form-control" id="title">
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div></div>
+                <div class="mb-3">
+                    <label for="description" class= "form-label"  >Details of the listing</label>
                     <textarea name="description" class= "form-control" id="description">   </textarea>
-                </div>
-                <div class="mb-3"><label for="image" class= "form-label"  >Image Link</label>
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div></div>
+                <div class="mb-3">
+                    <label for="image" class= "form-label"  >Image Link</label>
                     <input name="image" type="text" class= "form-control" id="image">  
-                </div>
-                <div class="mb-3"><label for="price" class= "form-label"  >Price</label>
-                    <input name="price" class= "form-control" type="text" id="price">  
-                </div>
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div></div>
+                <div class="mb-3">
+                    <label for="price" class= "form-label"  >Price</label>
+                    <input  required name="price" class= "form-control" type="number" id="price">  
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div></div>
 
                 <div class="row">
-                    <div class="col-md-8 mb-3"><label for="location" class= "form-label"  >Location</label>
+                    <div class="col-md-8 mb-3">
+                        <label for="location" class= "form-label"  >Location</label>
                         <input name="location" class= "form-control" type="text" id="location"> 
-                    </div>
-                    <div class="col-md-4 mb-3"><label for="country" class= "form-label"  >Country</label>
+                        <div class="valid-feedback">  Looks Valid </div>
+                        <div class="invalid-feedback">  Maybe Invalid?  </div></div>
+                    <div class="col-md-4 mb-3">
+                        <label for="country" class= "form-label"  >Country</label>
                         <input name="country" class= "form-control" type="text" id="country">    
+                        <div class="valid-feedback">  Looks Valid </div>
+                        <div class="invalid-feedback">  Maybe Invalid?  </div>
                     </div>
                 </div>
                
@@ -42,3 +55,4 @@
     </div>
        
 </body>
+

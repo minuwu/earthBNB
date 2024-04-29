@@ -1,23 +1,71 @@
 <% layout("layouts/boilerplate") %>
-
+<% block("head").append(`<title>Edit Listing -WanderLust</title>`)%>
 <body>
-    <h2>WanderLust</h2>
-    <h4>Edit this Listing</h4>
-    <form method="POST" action="/listings/<%=listing._id%>?_method=PUT">
-        <input name="listing[title]" type="text" value = "<%= listing.title %>">    <br><br>
-        <textarea name="listing[description]">
-            <%= listing.description %>
-        </textarea> <br><br>
-        <input name="listing[image]" type="text" value = "<%= listing.image %>">    <br><br>
-        <input name="listing[price]" type="number" value = "<%= listing.price %>">    <br><br>
-        <input name="listing[location]" type="text" value = "<%= listing.location %>">  <br><br>
-        <input name="listing[country]" type="text" value = "<%= listing.country %>">    <br><br>
-        <button>Edit the listing</button>
-    </form>
     <br><br>
-    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-        <button>Delete this listing</button>
-    </form>
-    <br><br>
-    
+    <div class="row">
+        <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate>
+            <div class="col-md-8 offset-md-2 mb-5">
+                <h2>Edit this listing</h2>
+                <div class="mb-3">
+                    <label for="title" class= "form-label"  >Listing Name</label>
+                    <input  required class= "form-control" id="title"  name="listing[title]" type="text" value = "<%= listing.title %>">
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                <div class="mb-3">
+                    <label for="description" class= "form-label"  >Details of the listing</label>
+                    <textarea class= "form-control" id="description" name="listing[description]"><%= listing.description %></textarea>
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                <div class="mb-3">
+                    <label for="image" class= "form-label"  >Image Link</label>
+                    <input class= "form-control" id="image" name="listing[image]" type="text" value = "<%= listing.image %>>  
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class= "form-label"  >Price</label>
+                    <input required  class= "form-control" id="price"  name="listing[price]" type="number" value = "<%= listing.price %>">  
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="location" class= "form-label"  >Location</label>
+                        <input class= "form-control" id="location" name="listing[location]" type="text" value = "<%= listing.location %>"> 
+                        <div class="valid-feedback">  Looks Valid </div>
+                        <div class="invalid-feedback">  Maybe Invalid?  </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="country" class= "form-label"  >Country</label>
+                        <input class= "form-control" id="country" name="listing[country]" type="text" value = "<%= listing.country %>">    
+                        <div class="valid-feedback">  Looks Valid </div>
+                        <div class="invalid-feedback">  Maybe Invalid?  </div>
+                    </div>
+                </div>
+               
+                <br>
+                <div class="mb-3">
+                    <button class="form-control btn btn-dark w-100 ">Edit this listing</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE"></form>
+            <div class="col-md-8 offset-md-2 mb-5">
+                <button class="form-control btn btn-danger w-100 ">Delete this listing</button>
+            </div>
+        </form>
+    </div>
+       
 </body>
+
+
+
+
+
+    
+        
+   
+    

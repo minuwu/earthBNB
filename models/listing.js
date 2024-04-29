@@ -13,7 +13,10 @@ const listingSchema = new Schema({
         default: IMG,
         set: (u) => u===""? IMG : u 
     },
-    price: Number,
+    price: {
+        type: Number,
+        default: 0
+    },
     location: String,
     country: String
 });
