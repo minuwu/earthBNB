@@ -82,7 +82,7 @@ app.get("/listings/:id", wrapAsync(async (req,res)=>{
 //     res.redirect("/listings");
 // }));
 //create route: //with JOI validation
-app.post("/listings",wrapAsync(async (req,res, next)=>{
+app.post("/listings",wrapAsync(async (req,res,next)=>{
     let {title, description, image, price, location, country} = req.body;
     let obj = {
         listing: {
@@ -110,13 +110,24 @@ app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
     let listing = await Listing.findById(id);
     res.render("listings/edit.ejs", {listing});
 }))
+//validation for update route
+const validateListing = (req,res,next) =>{
+    let {error} = listingSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(401,errMsg);
+    }else{
+        next();
+    }
+}
 //update route:
-app.put("/listings/:id", wrapAsync(async (req,res)=>{
+app.put("/listings/:id", validateListing, wrapAsync(async (req,res)=>{
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
     res.redirect(`/listings/${id}`);
 }))
-//delete route:
+
+//delete route: 
 app.delete("/listings/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
