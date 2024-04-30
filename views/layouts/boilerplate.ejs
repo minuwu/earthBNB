@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- block("head") -%>
+    <title>WanderLust</title>
+    <%- include("../includes/bootstrapCss.ejs") %>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    
+    <h1 class="text-center">WanderLust: Your Onestop Solution To Adventure</h1>
+    <%- include("../includes/navbar.ejs") %>
+
+    <div class="container">
+        <%- body %>
+    </div>
+
+    <%- include("../includes/footer.ejs") %>
+    <%- include("../includes/bootstrapJs.ejs") %>
+    <script src="/js/script.js"></script>
+</body>
+</html>

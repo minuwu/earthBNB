@@ -1,21 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-</head>
+<% layout("layouts/boilerplate") %>
+
+<% 
+block("head")
+.append('<title>All Listings -WanderLust</title>')
+%>
+
 <body>
-    <h2>Check out all listing here</h2>
-    <form method="GET" action="/listings/new">
+    <!-- <h2>Check out all listing here</h2> -->
+    <!-- <form method="GET" action="/listings/new">
         <button>Create a New Listing</button>
-    </form>
-    <ul>
+    </form> -->
+    <br><br>
+    <div class="row row-cols-md-3 row-cols-1 mb-4">        
         <% for(let listing of allListings){ %>
-            <li><a href="/listings/<%=listing._id%>">
-                <%=listing.title%>
-            </a></li>
+            <div class="col mb-2">
+                <div class="card ">
+                    <img src="<%=listing.image%>" class="card-img-top" alt="listing_img" style="height: 18rem;">
+                    <div class="card-body">
+                    <h5 class="card-title"><%=listing.title%></h5>
+                    <p class="card-text">$<%=listing.price.toLocaleString("en-IN")%>...</p>
+                    <a href="/listings/<%=listing._id%>" class="btn btn-primary w-100">View Listing</a>
+                    </div>
+                </div>
+            </div>
         <% } %>
-    </ul>
+    </div>
+
 </body>
-</html>
+
