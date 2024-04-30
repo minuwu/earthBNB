@@ -9,6 +9,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/expressError.js");
+const Joi = require("joi");
+const {listingSchema} = require("./schema.js");
 
 app.set("view engine","ejs");
 // app.set("views",path.join(__dirname,"views"));
@@ -16,6 +18,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"public")));
 app.engine("ejs", ejsMate);
+app.use(express.json());
 
 
 main()
@@ -65,18 +68,41 @@ app.get("/listings/:id", wrapAsync(async (req,res)=>{
     res.render("listings/show.ejs", {listing});
 }));
 //create route: 
+// app.post("/listings",wrapAsync(async (req,res, next)=>{
+//     let {title, description, image, price, location, country} = req.body;
+//     let newListing = new Listing({
+//         title,
+//         description,
+//         image,
+//         price,
+//         location,
+//         country
+//     });
+//     result = await newListing.save();
+//     res.redirect("/listings");
+// }));
+//create route: //with JOI validation
 app.post("/listings",wrapAsync(async (req,res, next)=>{
-        let {title, description, image, price, location, country} = req.body;
-        let newListing = new Listing({
+    let {title, description, image, price, location, country} = req.body;
+    let obj = {
+        listing: {
             title,
             description,
-            image,
+            image, 
             price,
             location,
             country
-        });
-        let result = await newListing.save();
-        res.redirect("/listings");
+        }
+    };
+    let result = listingSchema.validate(obj);
+    console.log(result);
+    console.log("**********");
+    if(result.error){
+        next(new ExpressError(401,"Validation failed"));
+    }
+    let newListing = new Listing(obj.listing);
+    result = await newListing.save();
+    res.redirect("/listings");
 }));
 //edit route:
 app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
@@ -99,14 +125,15 @@ app.delete("/listings/:id", wrapAsync(async (req,res)=>{
 }))
 
 app.all("*", (req,res,next)=>{
-    next(ExpressError(404,"Page Not Found"))
+    next(new ExpressError(404,"Page Not Found"))
 })
 
 //error handling middleware
 app.use((err, req, res, next)=>{
     let { statusCode= 500, message= "Something went wrong" } = err;
     console.log(`Handler: ErrCode ${statusCode} | ErrMsg ${message}`);
-    res.status(statusCode).send(message);
+    // res.status(statusCode).send(message);
+    res.status(statusCode).render("listings/error.ejs",{message});
 })
 
 app.listen(PORT,(req,res)=>{
