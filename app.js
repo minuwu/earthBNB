@@ -2,15 +2,16 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const PORT = 8080;
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"
-const Listing = require("./models/listing.js")
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/expressError.js");
 const Joi = require("joi");
-const {listingSchema} = require("./schema.js");
+const {listingSchema, reviewSchema} = require("./schema.js");
 
 app.set("view engine","ejs");
 // app.set("views",path.join(__dirname,"views"));
@@ -64,7 +65,7 @@ app.get("/listings/new",(req,res)=>{
 //show route:
 app.get("/listings/:id", wrapAsync(async (req,res)=>{
     let {id}  = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", {listing});
 }));
 //create route: 
@@ -134,6 +135,27 @@ app.delete("/listings/:id", wrapAsync(async (req,res)=>{
     console.log(deletedListing);
     res.redirect("/listings");
 }))
+
+//validation for review route
+const validateReview = (req,res,next) =>{
+    let {error} = reviewSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(401,errMsg);
+    }else{
+        next();
+    }
+}
+//create review : route
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req,res)=>{
+    let {id} = req.params;
+    let result = new Review(req.body.review);
+    let listing = await Listing.findById(id);
+    listing.reviews.push(result);
+    await result.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+}));
 
 app.all("*", (req,res,next)=>{
     next(new ExpressError(404,"Page Not Found"))

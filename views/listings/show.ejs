@@ -5,10 +5,10 @@
     <div class="container">
         <br><br><br>
         <div class="row">
-            <div class="col-md-8 offset-md-3 mb-5">
+            <div class="col-md-8 offset-md-3 mb-3">
 
                 <h2 class=""><%= listing.title%></h2>
-                <div class="w-100"><img src="<%= listing.image%>"></div>
+                <div class=""><img src="<%= listing.image%>"></div>
                 <br>
                 <div class=""><%= listing.description%></div>
                 <div class=""><b><%= listing.price.toLocaleString("en-IN")%></b></div>
@@ -27,6 +27,35 @@
             </div>
             
         </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-3 mb-5">
+                <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
+                    <div class="mb-2">
+                        <label for="rating" class="form-label mb-1">Give a rating</label>
+                         <input required class="form-control" id="rating" type="range" min="1" max="5" name="review[rating]">
+                        <div class="invalid-feedback"> No blank fields </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="content" class="form-label mb-1"> Write a small review: </label>
+                        <textarea required class="form-control" id="content" name="review[content]" rows="3" cols="5"></textarea>
+                        <div class="invalid-feedback"> No blank fields </div>
+                    </div>
+                    <button class="form-control mb-2 btn btn-outline-dark"> Submit the review </button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-3 mb-5">
+        
+                
+                    <% if(listing.reviews.length){ %>
+                        <% for( let review of listing.reviews){ %>
+                            <h3 class="mb-2"><%=review.content%></h3>
+                        <% } %>
+                    <% } %>
+        
+            </div>
+        </div>
     </div>
     
     
@@ -34,3 +63,6 @@
     <br><br>
 
 </body>
+
+
+
