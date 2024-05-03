@@ -132,7 +132,7 @@ app.put("/listings/:id", validateListing, wrapAsync(async (req,res)=>{
 app.delete("/listings/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
+    // console.log(deletedListing);
     res.redirect("/listings");
 }))
 
@@ -156,6 +156,15 @@ app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req,res)=>{
     await listing.save();
     res.redirect(`/listings/${id}`);
 }));
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync( async (req,res)=>{
+    let {id, reviewId} = req.params;
+    let listing = await Listing.findByIdAndUpdate(id, {$pull: { reviews: reviewId}});
+    await listing.save();
+    // console.log(listing);
+    let result = await Review.findByIdAndDelete(reviewId);
+    console.log(result);
+    res.redirect(`/listings/${id}`);
+}))
 
 app.all("*", (req,res,next)=>{
     next(new ExpressError(404,"Page Not Found"))

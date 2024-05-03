@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema =  mongoose.Schema;
-const Review = require("./models/review.js");
+const Review = require("./review.js");
 const IMG = "https://images.unsplash.com/photo-1486523834155-1dabf4edaa64?q=80&w=1531&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const listingSchema = new Schema({
@@ -28,8 +28,9 @@ const listingSchema = new Schema({
     ]
 });
 
-listingSchema.pre("findOneAndDelete",async (listing)=>{
-    if(listing.reviews.length){
+listingSchema.pre("findOneAndDelete", async (listing)=>{
+    // console.log(listing);
+    if(listing.reviews){
         let result = await Review.deleteMany({_id: {$in: listing.reviews}});
         console.log("ListingSchema Post Middleware : \n", result);
     }

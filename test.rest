@@ -37,16 +37,16 @@ content-type: application/json
     }
 }
 ###
-POST http://localhost:8080/listings/663453f604bcb2f55eb254bf/reviews HTTP/1.1
+POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba/reviews HTTP/1.1
 content-type: application/json
 
 {
     "review": {
-            "rating" : 5,
-            "content": "not a nicd dfd fdf sfsdsdfsdfdsfsdfds e forrest inn"
+            "rating" : 4,
+            "content": "f fsdfdsfsdfds e forrest inn"
         }
 }
 ###
-GET http://localhost:8080/listings/663453f604bcb2f55eb254bf
+GET http://localhost:8080/listings/6634e44eef3b737ca5ca74ba
 ###
-POST http://localhost:8080/listings/663453f604bcb2f55eb254bf?_method=DELETE
+POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba?_method=DELETE
