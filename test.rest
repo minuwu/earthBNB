@@ -21,7 +21,8 @@ content-type: application/json
     "title": "Forrest Gugfgfmp",
     "description": "A forrest gump edition",
     "price": 44444,
-    "location": "alalalal"
+    "location": "alalalal",
+    "country": "jingalala land"
 }
 ###
 PUT http://localhost:8080/listings/6627b28acc3b07a927e20674 HTTP/1.1
@@ -35,3 +36,17 @@ content-type: application/json
         "location": "alalalal"
     }
 }
+###
+POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba/reviews HTTP/1.1
+content-type: application/json
+
+{
+    "review": {
+            "rating" : 4,
+            "content": "f fsdfdsfsdfds e forrest inn"
+        }
+}
+###
+GET http://localhost:8080/listings/6634e44eef3b737ca5ca74ba
+###
+POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba?_method=DELETE
