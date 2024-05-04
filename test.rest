@@ -2,7 +2,7 @@ GET http://localhost:8080
 ###
 GET http://localhost:8080/testlisting
 ###
-GET http://localhost:8080/listings
+GET http://localhost:8080/listings/
 ###
 GET http://localhost:8080/listings/new
 ###
@@ -10,7 +10,7 @@ GET http://localhost:8080/listings/6627b28acc3b07a927e20674
 ###
 GET http://localhost:8080/randomShit
 ###
-GET http://localhost:8080/listings/3247b28acc3b07a927e20674
+GET http://localhost:8080/listings/6627b28acc3b07a927e20668
 ###
 GET http://localhost:8080/listings/cc3b07a927e20674
 ###
@@ -37,7 +37,7 @@ content-type: application/json
     }
 }
 ###
-POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba/reviews HTTP/1.1
+POST http://localhost:8080/listings/6627b28acc3b07a927e20668/reviews HTTP/1.1
 content-type: application/json
 
 {
@@ -50,3 +50,4 @@ content-type: application/json
 GET http://localhost:8080/listings/6634e44eef3b737ca5ca74ba
 ###
 POST http://localhost:8080/listings/6634e44eef3b737ca5ca74ba?_method=DELETE
+
