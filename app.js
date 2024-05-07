@@ -3,15 +3,10 @@ const app = express();
 const mongoose = require("mongoose");
 const PORT = 8080;
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const Listing = require("./models/listing.js");
-const Review = require("./models/review.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/expressError.js");
-const Joi = require("joi");
-const {listingSchema, reviewSchema} = require("./schema.js");
 const listingRoute = require("./routes/listing.js");
 const listingReviewRoute = require("./routes/listingReview.js");
 
