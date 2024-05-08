@@ -8,7 +8,7 @@
             <div class="col-md-8 offset-md-3 mb-3">
 
                 <h2 class=""><%= listing.title%></h2>
-                <div class=""><img src="<%= listing.image%>"></div>
+                <div class=""><img class="card-img-top" src="<%= listing.image%>"></div>
                 <br>
                 <div class=""><%= listing.description%></div>
                 <div class=""><b><%= listing.price.toLocaleString("en-IN")%></b></div>
@@ -17,10 +17,10 @@
                 <br>
          
                 <div class="row">
-                    <form class="col-md-4 m-1" method="GET" action="/listings/<%=listing._id%>/edit">
+                    <form class="col-md-5 m-1 offfset-md-1" method="GET" action="/listings/<%=listing._id%>/edit">
                         <button class="btn btn-dark w-100">Edit listing</button>
                     </form>
-                    <form class="col-md-4 m-1" method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+                    <form class="col-md-5 m-1 offfset-md-1" method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
                         <button class="btn btn-danger w-100">Delete listing</button>
                     </form>
                 </div>
