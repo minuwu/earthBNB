@@ -22,7 +22,7 @@ router.post("/signup", wrapAsync(async (req, res)=>{
     } catch (error) {
         req.flash("error", error.message);
         console.log(error.message);
-        req.redirect("/signup");
+        res.redirect("/signup");
     }
 }));
 
@@ -41,4 +41,13 @@ router.post("/login",
     }
 );
 
+router.get("/logout", (req, res)=>{
+    req.logout((err)=>{
+        if(err){
+            next(err);
+        }
+        req.flash("success","Logged Out from @WL");
+        res.redirect("/listings");
+    })
+});
 module.exports = router;
