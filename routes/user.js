@@ -17,12 +17,15 @@ router.post("/signup", wrapAsync(async (req, res)=>{
         });
         let savedUser = await User.register(newUser,password);
         console.log(savedUser);
-        req.flash("success","User registered succuessful");
-        res.redirect("/listings");
+        req.login(savedUser, ((err)=>{
+            if(err) return next(err);
+                req.flash("success","User registered succuessful");
+                res.redirect("/listings");
+        }));
     } catch (error) {
         req.flash("error", error.message);
         console.log(error.message);
-        req.redirect("/signup");
+        res.redirect("/signup");
     }
 }));
 
@@ -41,4 +44,13 @@ router.post("/login",
     }
 );
 
+router.get("/logout", (req, res)=>{
+    req.logout((err)=>{
+        if(err){
+            next(err);
+        }
+        req.flash("success","Logged Out from @WL");
+        res.redirect("/listings");
+    })
+});
 module.exports = router;
