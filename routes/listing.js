@@ -20,7 +20,16 @@ router.get("/new",isLoggedIn, (req,res)=>{
 //show route:
 router.get("/:id", wrapAsync(async (req,res)=>{
     let {id}  = req.params;
-    let listing = await Listing.findById(id).populate("reviews").populate("owner");
+    let listing = await 
+    Listing
+    .findById(id)
+    .populate({
+        path: "reviews",
+        populate: {
+            path: "author"
+        }
+    }
+    ).populate("owner");
     if(!listing){
         req.flash("error","Listing Doesn't Exist!");
         res.redirect("/listings");
@@ -55,8 +64,8 @@ router.post("/",isLoggedIn, wrapAsync(async (req,res,next)=>{
         }
     };
     let result = listingSchema.validate(obj);
-    console.log(result);
-    console.log("**********");
+    // console.log(result);
+    // console.log("**********");
     if(result.error){
         next(new ExpressError(401,"Validation failed"));
     }
@@ -64,7 +73,7 @@ router.post("/",isLoggedIn, wrapAsync(async (req,res,next)=>{
     newListing.owner = req.user._id;
     result = await newListing.save();
     req.flash("success","New Listing Created!");
-    res.redirect("/listings");
+    res.redirect(`/listings/${newListing._id}`);
 }));
 //edit route:
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req,res)=>{

@@ -31,6 +31,7 @@
         </div>
         <div class="row">
             <div class="col-md-8 offset-md-3 mb-5">
+                <% if(currUser){ %>
                 <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
                     <div class="mb-2">
                         <label for="rating" class="form-control form-range mb-1">Give a rating</label>
@@ -44,6 +45,7 @@
                     </div>
                     <button class="form-control mb-2 btn btn-outline-dark"> Submit the review </button>
                 </form>
+                <% } %>
             </div>
         </div>
         <div class="row">
@@ -56,7 +58,9 @@
                         <% for( let review of listing.reviews){ %>
                             <div class="card w-100 me-1 mb-2 ms-1">
                                 <h5 class="ms-2 mt-1">
-                                    <%= review.rating%> <i class="fa-regular fa-star">  </i>   <%=review.content%> 
+
+                                    @<%= review.author.username %><i class="fa-regular fa-star">  </i>   <%= review.rating%> 
+                                    <p><%=review.content%> </p>
                                     <form method="POST" action="/listings/<%=listing.id %>/reviews/<%= review.id %>?_method=DELETE">
                                         <button class="btn btn-danger w-30 mt-1 inline-block">Delete</button>
                                     </form>
