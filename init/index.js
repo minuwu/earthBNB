@@ -14,6 +14,7 @@ let initDB = async () =>{
     console.log("initDB: Initialized...")
     await Listing.deleteMany({});
     console.log("initDB: Listing Cleared... ")
+    initdata.data = initdata.data.map((obj)=>({...obj, owner: "663b16cb8a6b6f6888a08c1c"}));
     await Listing.insertMany(initdata.data);
     console.log("initDB: Listing Populated... ")
     let result =  await Listing.find();

@@ -4,7 +4,7 @@ const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/expressError.js");
 const {listingSchema} = require("../schema.js");
-const {isLoggedIn} = require("../middleware.js");
+const {isLoggedIn, isOwner} = require("../middleware.js");
 
 //index route:
 router.get("/",wrapAsync(async (req,res)=>{
@@ -20,7 +20,7 @@ router.get("/new",isLoggedIn, (req,res)=>{
 //show route:
 router.get("/:id", wrapAsync(async (req,res)=>{
     let {id}  = req.params;
-    let listing = await Listing.findById(id).populate("reviews");
+    let listing = await Listing.findById(id).populate("reviews").populate("owner");
     if(!listing){
         req.flash("error","Listing Doesn't Exist!");
         res.redirect("/listings");
@@ -61,12 +61,13 @@ router.post("/",isLoggedIn, wrapAsync(async (req,res,next)=>{
         next(new ExpressError(401,"Validation failed"));
     }
     let newListing = new Listing(obj.listing);
+    newListing.owner = req.user._id;
     result = await newListing.save();
     req.flash("success","New Listing Created!");
     res.redirect("/listings");
 }));
 //edit route:
-router.get("/:id/edit", isLoggedIn, wrapAsync(async (req,res)=>{
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req,res)=>{
     let {id}  = req.params;
     let listing = await Listing.findById(id);
     if(!listing){
@@ -86,7 +87,7 @@ const validateListing = (req,res,next) =>{
     }
 }
 //update route:
-router.put("/:id", isLoggedIn, validateListing, wrapAsync(async (req,res)=>{
+router.put("/:id", isLoggedIn, isOwner, validateListing, wrapAsync(async (req,res)=>{
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
     req.flash("success","Listing Updated!");
@@ -94,7 +95,7 @@ router.put("/:id", isLoggedIn, validateListing, wrapAsync(async (req,res)=>{
 }))
 
 //delete route: 
-router.delete("/:id", isLoggedIn, wrapAsync(async (req,res)=>{
+router.delete("/:id", isLoggedIn, isOwner, wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     if(!deletedListing){
