@@ -65,7 +65,7 @@ app.all("*", (req,res,next)=>{
 //error handling middleware
 app.use((err, req, res, next)=>{
     let { statusCode= 500, message= "Something went wrong" } = err;
-    console.log(`Handler: ErrCode ${statusCode} | ErrMsg ${message}`);
+    console.log(`Handler: ErrCode ${statusCode} | ErrMsg ${message} || ${req.originalUrl}`);
     // res.status(statusCode).send(message);
     res.status(statusCode).render("listings/error.ejs",{message});
 })
