@@ -7,12 +7,24 @@ const {listingSchema} = require("../schema.js");
 const {isLoggedIn, isOwner, validateListing} = require("../middleware.js");
 const listingController = require("../controllers/listing.js");
 
+
+const multer =  require("multer");
+const {storage} = require("../cloudinaryConfig.js");
+// const upload = multer({dest: "uploads/"});
+const upload = multer({storage});
+
 router.route("/")
     .get(wrapAsync(listingController.listingIndex))
-    .post(isLoggedIn, wrapAsync(listingController.createNewListing))
+    .post(upload.single('image'),(req, res)=>{
+        console.dir(req.body);
+        res.send(req.file);
+    }) //multer single upload
+    // .post(isLoggedIn, wrapAsync(listingController.createNewListing))
+
 
 //new route: 
 router.get("/new",isLoggedIn, listingController.renderNewListingForm)
+// router.get("/new", listingController.renderNewListingForm) //multer test without login
 
 router.route("/:id")
     .get( wrapAsync(listingController.showListing))
