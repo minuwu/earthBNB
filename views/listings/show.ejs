@@ -9,7 +9,7 @@
 
                 <h2 class=""><%= listing.title%></h2>
                 <p><i>Owned By: <%= listing.owner.username %></i></p>
-                <div class=""><img class="card-img-top" src="<%= listing.image%>"></div>
+                <div class=""><img class="card-img-top" src="<%= listing.image.url%>"></div>
                 <br>
                 <div class=""><%= listing.description%></div>
                 <div class=""><b><%= listing.price.toLocaleString("en-IN")%></b></div>
