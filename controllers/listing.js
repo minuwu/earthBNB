@@ -1,4 +1,6 @@
 const Listing = require("../models/listing.js");
+const {listingSchema} = require("../schema.js");
+const ExpressError = require("../utils/expressError.js");
 
 module.exports.listingIndex = async (req,res)=>{
     // console.log("GET: /listings REQUESTED ");
@@ -58,6 +60,8 @@ module.exports.createNewListing = async (req,res,next)=>{
             country
         }
     };
+    // console.log(req.body);
+    // console.log(obj);
     let result = listingSchema.validate(obj);
     // console.log(result);
     // console.log("**********");
@@ -66,6 +70,8 @@ module.exports.createNewListing = async (req,res,next)=>{
     }
     let newListing = new Listing(obj.listing);
     newListing.owner = req.user._id;
+    let url = req.file.path, filename = req.file.filename;
+    newListing.image = {url, filename};
     result = await newListing.save();
     req.flash("success","New Listing Created!");
     res.redirect(`/listings/${newListing._id}`);
