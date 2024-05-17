@@ -84,12 +84,19 @@ module.exports.editListing = async (req,res)=>{
         req.flash("error","Listing Doesn't Exist!");
         res.redirect("/listings");
     }
-    res.render("listings/edit.ejs", {listing});
+    let imageUrl = listing.image.url;
+    imageUrl.replace("/upload","/upload/w_350"); //cloudinary image transformation
+    res.render("listings/edit.ejs", {listing , imageUrl});
 }
 
 module.exports.updateListing = async (req,res)=>{
     let {id} = req.params;
-    await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    let listing = await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    if(typeof req.file != "undefined"){
+        let url = req.file.path, filename = req.file.filename;
+        listing.image = {url, filename};
+        await listing.save();
+    }
     req.flash("success","Listing Updated!");
     res.redirect(`/listings/${id}`);
 }

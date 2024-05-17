@@ -3,7 +3,7 @@
 <body>
     <br><br>
     <div class="row">
-        <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate>
+        <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="col-md-8 offset-md-2 mb-5">
                 <h2>Edit this listing</h2>
                 <div class="mb-3">
@@ -11,16 +11,20 @@
                     <input  required class= "form-control" id="title"  name="listing[title]" type="text" value = "<%= listing.title %>">
                     <div class="valid-feedback">  Looks Valid </div>
                     <div class="invalid-feedback">  Maybe Invalid?  </div>
+                </div>
                 <div class="mb-3">
                     <label for="description" class= "form-label"  >Details of the listing</label>
                     <textarea class= "form-control" id="description" name="listing[description]"><%= listing.description %></textarea>
                     <div class="valid-feedback">  Looks Valid </div>
                     <div class="invalid-feedback">  Maybe Invalid?  </div>
+                </div>
                 <div class="mb-3">
-                    <label for="image" class= "form-label"  >Image Link</label>
-                    <input class= "form-control" id="image" name="listing[image]" type="text" value = "<%= listing.image %>>  
-                    <div class="valid-feedback">  Looks Valid </div>
-                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                    <label for="currImage" class="form-label">Current Listing Image</label>
+                    <img src="<%= imageUrl %>">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class= "form-label"  >Upload New Image </label>
+                    <input class= "form-control" id="image" name="listing[image]" type="file">
                 </div>
                 <div class="mb-3">
                     <label for="price" class= "form-label"  >Price</label>
