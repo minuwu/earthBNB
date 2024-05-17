@@ -7,7 +7,7 @@
     
     <div class="row">
            
-            <form method="POST" action="/listings" class="needs-validation" novalidate>
+            <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="col-md-8 offset-md-2 mb-5">
                 <h2>Create a new listing</h2>
                 <div class="mb-3">
@@ -20,11 +20,18 @@
                     <textarea name="description" class= "form-control" id="description"></textarea>
                     <div class="valid-feedback">  Looks Valid </div>
                     <div class="invalid-feedback">  Maybe Invalid?  </div></div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="image" class= "form-label"  >Image Link</label>
                     <input name="image" type="text" class= "form-control" id="image">  
                     <div class="valid-feedback">  Looks Valid </div>
-                    <div class="invalid-feedback">  Maybe Invalid?  </div></div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div></div> -->
+
+                <div class="mb-3">
+                    <label for="image" class= "form-label"  >Upload Image File</label>
+                    <input name="image" type="file" class= "form-control" id="image">  
+                    <div class="valid-feedback">  Looks Valid </div>
+                    <div class="invalid-feedback">  Maybe Invalid?  </div>
+                </div>
                 <div class="mb-3">
                     <label for="price" class= "form-label"  >Price</label>
                     <input  required name="price" class= "form-control" type="number" id="price">  
