@@ -5,7 +5,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const PORT = 8080;
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const SECRET =  process.env.SECRET;
+const MONGO_URL = process.env.MONGO_URL;
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
@@ -13,6 +14,7 @@ const ExpressError = require("./utils/expressError.js");
 const listingRoute = require("./routes/listing.js");
 const listingReviewRoute = require("./routes/listingReview.js");
 const userRoute = require("./routes/user.js");
+const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -26,11 +28,22 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"public")));
 app.engine("ejs", ejsMate);
 app.use(express.json());
+
+const store = MongoStore.create({
+    mongoUrl : MONGO_URL,
+    crypto: {
+        secret: SECRET
+    },
+    touchAfter: 24*3600
+})
+
 const sessionOptions = {
-    secret: "supersecretpassphrase",
+    store: store,
+    secret: SECRET,
     resave: false,
     saveUninitialized: true
 };
+store.on("error",(error)=>console.log(error));
 app.use(session(sessionOptions));
 app.use(flash());
 app.use(passport.initialize());
