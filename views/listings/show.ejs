@@ -1,7 +1,11 @@
 <% layout("layouts/boilerplate") %>
 <% block("head").append(`<title>Listing:${listing.title}</title>`)
 %>
-<script> const mapToken = "<%= process.env.MAP_TOKEN %>" </script>
+<script> 
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates = "<%-JSON.stringify(listing.geometry.coordinates)%>";
+    console.log(mapToken);
+</script>
 <body>
     <div class="container">
         <br><br><br>
@@ -81,9 +85,12 @@
                                     <i class="fa-regular fa-star">  </i>  @<%= review.author.username %> 
                                     <br><br>
                                     <p><%=review.content%> </p>
-                                    <form method="POST" action="/listings/<%=listing.id %>/reviews/<%= review.id %>?_method=DELETE">
-                                        <button class="btn btn-danger w-30 mt-1 inline-block">Delete</button>
-                                    </form>
+                                    <% if(currUser && currUser._id.equals(review.author._id)){ %>
+                                        <form method="POST" action="/listings/<%=listing.id %>/reviews/<%= review.id %>?_method=DELETE">
+                                            <button class="btn btn-danger w-30 mt-1 inline-block">Delete</button>
+                                        </form>
+                                    <% } %>
+
                                 </h5>
                             </div>
                         <% } %>
@@ -91,20 +98,34 @@
         
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-8 offset-md-3 mb-5">
                 <h3>Where you'll be </h3>
                 <div id="map"></div>
                 <script>
+                    // console.log(coordinates);
+                    let cords = JSON.parse(coordinates);
+                    console.log(cords);
+
                     mapboxgl.accessToken = mapToken ;
                     const map = new mapboxgl.Map({
                         container: 'map', // container ID
-                        center: [-74.5, 40], // starting position [lng, lat]
+                        style: "mapbox://styles/mapbox/streets-v12",
+                        center: cords, // starting position [lng, lat]
                         zoom: 9 // starting zoom
                     });
+                   
+                    const marker = new mapboxgl.Marker({ color: "red" })
+                    .setLngLat(cords)
+                    .setPopup(
+                        new mapboxgl.Popup({ offset: 25}).setHTML(
+                            `<h6>exact location provided after booking </h6>`
+                        )
+                    )
+                    .addTo(map);
                 </script>
             </div>
-        </div>
+        </div> -->
     </div>
     
     

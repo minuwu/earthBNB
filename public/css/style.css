@@ -65,3 +65,17 @@ f-socials, f-brand, f-links{
 .card-img-top{
     object-fit: cover !important;
 }
+
+.search-input{
+    /* text-align: center; */
+    font-size: 1.2rem;
+    border-radius: .9rem;
+    width: 100%;
+    
+}
+.search-btn{
+    font-size: .8rem;
+    border-radius: .9rem;
+    position: relative;
+    left: -80px;
+}
